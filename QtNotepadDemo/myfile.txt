@@ -1,0 +1,21 @@
+void MainWindow::on_actionSave_As_triggered()
+{
+    QString saveFilePath = QFileDialog::getSaveFileName(this, "Saving File");
+    QFile file(saveFilePath);
+    filepath = saveFilePath;
+
+    // check if file is open
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {
+        // file not open
+        QMessageBox::warning(this, "Save File Error", "File Not Open");
+        return;
+    }
+
+    QTextStream out(&file);
+    out << ui->textEdit->toPlainText(); // store to editor
+
+    file.flush();
+    file.close();
+}
+
+// save comment
